@@ -67,6 +67,23 @@
         .prev-category { left: 20px; }
         .next-category { right: 20px; }
         
+        /* Cart Modal */
+        .cart-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 200; }
+        .cart-content { background: white; width: 400px; max-height: 80vh; overflow-y: auto; position: absolute; right: 0; top: 0; padding: 20px; box-shadow: -5px 0 15px rgba(0,0,0,0.2); }
+        .cart-content h3 { font-size: 1.8rem; margin-bottom: 20px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 10px; border-bottom: 1px solid #ddd; }
+        .cart-item img { width: 50px; height: 50px; object-fit: cover; }
+        .cart-item-details { flex: 1; margin-left: 10px; }
+        .cart-item-details p { margin: 5px 0; }
+        .quantity-controls { display: flex; align-items: center; }
+        .quantity-controls button { background: var(--gradient); color: white; border: none; width: 25px; height: 25px; border-radius: 50%; cursor: pointer; }
+        .quantity-controls span { margin: 0 10px; }
+        .cart-subtotal { margin-top: 20px; font-size: 1.2rem; font-weight: 600; }
+        .cart-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+        .cart-buttons button { padding: 10px 20px; border-radius: 20px; cursor: pointer; }
+        .close-cart { background: var(--secondary); color: white; border: none; }
+        .checkout { background: var(--gradient); color: white; border: none; }
+        
         /* Footer */
         footer { background-color: var(--secondary); color: white; padding: 60px 5% 30px; }
         .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
@@ -93,6 +110,7 @@
             .nav-links li { margin: 15px 0; }
             .menu-toggle { display: block; }
             .category-card { min-width: calc(100% - 20px); }
+            .cart-content { width: 100%; }
         }
     </style>
 </head>
@@ -110,7 +128,7 @@
             </ul>
             <div class="cart-icon">
                 <i class="fas fa-shopping-bag"></i>
-                <span class="cart-count">3</span>
+                <span class="cart-count">0</span>
             </div>
             <div class="menu-toggle">
                 <i class="fas fa-bars"></i>
@@ -130,9 +148,9 @@
             <a href="#" class="cta-btn">Explore Vintage</a>
         </div>
         <div class="hero-slide slide-3">
-            <h1>Limited Edition Drops</h1>
-            <p>Be the first to rock what's next</p>
-            <a href="#" class="cta-btn">See Latest</a>
+            <h1>Your Style, Your Way</h1>
+            <p>From street to formal, we’ve got you</p>
+            <a href="#" class="cta-btn">See Collections</a>
         </div>
         <div class="hero-slider-dots">
             <div class="hero-slider-dot active" data-slide="0"></div>
@@ -165,53 +183,99 @@
                     <div class="quick-view">
                         <p>Sizes: S, M, L</p>
                         <p>Colors: Black, White</p>
-                        <button class="quick-add">Quick Add</button>
+                        <button class="quick-add" data-item="Streetwear Jacket" data-price="89.99">Quick Add</button>
                     </div>
                 </div>
                 <div class="category-card">
                     <div class="card-inner">
                         <div class="card-front">
                             <div class="zoom-container">
-                                <img src="/api/placeholder/400/400" alt="Vintage" class="zoom-img">
+                                <img src="/api/placeholder/400/400" alt="Sportswear" class="zoom-img">
                             </div>
                             <div class="category-card-content">
-                                <h3>Vintage</h3>
-                                <p>Classic pieces</p>
+                                <h3>Sportswear</h3>
+                                <p>Athletic vibes</p>
                             </div>
                         </div>
                         <div class="card-back">
-                            <h3>Vintage</h3>
-                            <p>In Stock: 10</p>
-                            <a href="#">Shop Now</a>
-                        </div>
-                    </div>
-                    <div class="quick-view">
-                        <p>Sizes: M, L, XL</p>
-                        <p>Colors: Blue, Red</p>
-                        <button class="quick-add">Quick Add</button>
-                    </div>
-                </div>
-                <div class="category-card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="zoom-container">
-                                <img src="/api/placeholder/400/400" alt="Accessories" class="zoom-img">
-                            </div>
-                            <div class="category-card-content">
-                                <h3>Accessories</h3>
-                                <p>Statement pieces</p>
-                            </div>
-                        </div>
-                        <div class="card-back">
-                            <h3>Accessories</h3>
+                            <h3>Sportswear</h3>
                             <p>In Stock: 20</p>
                             <a href="#">Shop Now</a>
                         </div>
                     </div>
                     <div class="quick-view">
-                        <p>Sizes: One Size</p>
-                        <p>Colors: Silver, Gold</p>
-                        <button class="quick-add">Quick Add</button>
+                        <p>Sizes: M, L, XL</p>
+                        <p>Colors: Red, Blue</p>
+                        <button class="quick-add" data-item="Sports Hoodie" data-price="59.99">Quick Add</button>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="zoom-container">
+                                <img src="/api/placeholder/400/400" alt="Formals" class="zoom-img">
+                            </div>
+                            <div class="category-card-content">
+                                <h3>Formals</h3>
+                                <p>Sharp elegance</p>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>Formals</h3>
+                            <p>In Stock: 10</p>
+                            <a href="#">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="quick-view">
+                        <p>Sizes: S, M, L</p>
+                        <p>Colors: Black, Grey</p>
+                        <button class="quick-add" data-item="Formal Shirt" data-price="79.99">Quick Add</button>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="zoom-container">
+                                <img src="/api/placeholder/400/400" alt="Gothic Fashion" class="zoom-img">
+                            </div>
+                            <div class="category-card-content">
+                                <h3>Gothic Fashion</h3>
+                                <p>Dark aesthetics</p>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>Gothic Fashion</h3>
+                            <p>In Stock: 12</p>
+                            <a href="#">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="quick-view">
+                        <p>Sizes: M, L</p>
+                        <p>Colors: Black, Purple</p>
+                        <button class="quick-add" data-item="Gothic Coat" data-price="129.99">Quick Add</button>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="zoom-container">
+                                <img src="/api/placeholder/400/400" alt="Traditional Wear" class="zoom-img">
+                            </div>
+                            <div class="category-card-content">
+                                <h3>Traditional Wear</h3>
+                                <p>Cultural classics</p>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>Traditional Wear</h3>
+                            <p>In Stock: 8</p>
+                            <a href="#">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="quick-view">
+                        <p>Sizes: S, M, L</p>
+                        <p>Colors: Gold, Red</p>
+                        <button class="quick-add" data-item="Traditional Kurta" data-price="99.99">Quick Add</button>
                     </div>
                 </div>
             </div>
@@ -221,6 +285,18 @@
             </div>
         </div>
     </section>
+
+    <div class="cart-modal">
+        <div class="cart-content">
+            <h3>Your Cart</h3>
+            <div class="cart-items"></div>
+            <div class="cart-subtotal">Subtotal: $<span>0.00</span></div>
+            <div class="cart-buttons">
+                <button class="close-cart">Close</button>
+                <button class="checkout">Checkout</button>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <div class="footer-content">
@@ -239,9 +315,10 @@
                 <ul class="footer-links">
                     <li><a href="#">New Arrivals</a></li>
                     <li><a href="#">Streetwear</a></li>
-                    <li><a href="#">Vintage</a></li>
-                    <li><a href="#">Accessories</a></li>
-                    <li><a href="#">Limited Editions</a></li>
+                    <li><a href="#">Sportswear</a></li>
+                    <li><a href="#">Formals</a></li>
+                    <li><a href="#">Gothic Fashion</a></li>
+                    <li><a href="#">Traditional Wear</a></li>
                 </ul>
             </div>
             <div class="footer-column">
@@ -384,6 +461,75 @@
             } else {
                 header.classList.remove('shrink');
             }
+        });
+
+        // Enhanced Cart System
+        const cartModal = document.querySelector('.cart-modal');
+        const cartItemsContainer = document.querySelector('.cart-items');
+        const cartCount = document.querySelector('.cart-count');
+        const cartSubtotal = document.querySelector('.cart-subtotal span');
+        const cartIcon = document.querySelector('.cart-icon');
+        const closeCartBtn = document.querySelector('.close-cart');
+        let cart = [];
+
+        function updateCart() {
+            cartItemsContainer.innerHTML = '';
+            let subtotal = 0;
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                cartItemsContainer.innerHTML += `
+                    <div class="cart-item" data-index="${index}">
+                        <img src="/api/placeholder/50/50" alt="${item.name}">
+                        <div class="cart-item-details">
+                            <p>${item.name}</p>
+                            <p>$${itemTotal.toFixed(2)}</p>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="decrease">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="increase">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+            cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartSubtotal.textContent = subtotal.toFixed(2);
+        }
+
+        document.querySelectorAll('.quick-add').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const itemName = btn.dataset.item;
+                const itemPrice = parseFloat(btn.dataset.price);
+                const existingItem = cart.find(item => item.name === itemName);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    cart.push({ name: itemName, price: itemPrice, quantity: 1 });
+                }
+                updateCart();
+                cartModal.style.display = 'block';
+            });
+        });
+
+        cartIcon.addEventListener('click', () => {
+            cartModal.style.display = 'block';
+        });
+
+        closeCartBtn.addEventListener('click', () => {
+            cartModal.style.display = 'none';
+        });
+
+        cartItemsContainer.addEventListener('click', (e) => {
+            const index = e.target.closest('.cart-item')?.dataset.index;
+            if (!index) return;
+            if (e.target.classList.contains('increase')) {
+                cart[index].quantity++;
+            } else if (e.target.classList.contains('decrease')) {
+                cart[index].quantity--;
+                if (cart[index].quantity <= 0) cart.splice(index, 1);
+            }
+            updateCart();
         });
     </script>
 </body>
